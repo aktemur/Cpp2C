@@ -16,9 +16,9 @@ void Point_init(Point *self, int x, int y) {
 }
 
 int main() {
-  struct Point p1;
+  Point p1;
   Point_init(&p1, 0, 0);
-  struct Point p2;
+  Point p2;
   Point_init(&p2, 3, 8);
 
   printf("P1: %d, %d\n", p1.x, p1.y);
