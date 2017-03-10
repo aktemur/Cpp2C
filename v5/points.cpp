@@ -17,9 +17,13 @@ public:
     y += dy;
   }
 
+  void print() {
+    printf("P.print: %d, %d\n", x, y);
+  }
+  
   // Virtual function, woohoo!
-  virtual void print() {
-    printf("P: %d, %d\n", x, y);
+  virtual void vPrint() {
+    printf("P.vPrint: %d, %d\n", x, y);
   }
 };
 
@@ -35,8 +39,12 @@ public:
     color = c;
   }
 
-  virtual void print() {
-    printf("CP: %d, %d, %d\n", x, y, color);
+  void print() {
+    printf("CP.print: %d, %d, %d\n", x, y, color);
+  }
+
+  virtual void vPrint() {
+    printf("CP.vPrint: %d, %d, %d\n", x, y, color);
   }
 };
 
@@ -53,9 +61,11 @@ int main() {
   }
   // It's not possible to know statically
   // which print function will be called here.
-  p->print();    // dynamic dispatch
-  p->move(5, 4); // static dispatch
-  p->print();    // dynamic dispatch
+  p->print();     // static dispatch
+  p->vPrint();    // dynamic dispatch
+  p->move(5, 4);  // static dispatch
+  p->print();     // static dispatch
+  p->vPrint();    // dynamic dispatch
 
   return 0;
 }

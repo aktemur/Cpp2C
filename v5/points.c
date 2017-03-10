@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 typedef struct Point {
-  void (*print)(struct Point *);
+  void (*vPrint)(struct Point *);
   int x;
   int y;
 } Point;
@@ -14,17 +14,21 @@ void Point_move(Point *self, int dx, int dy) {
 }
 
 void Point_print(Point *self) {
-  printf("P: %d, %d\n", self->x, self->y);
+  printf("P.print: %d, %d\n", self->x, self->y);
+}
+
+void Point_vPrint(Point *self) {
+  printf("P.vPrint: %d, %d\n", self->x, self->y);
 }
 
 void Point_init(Point *self, int x, int y) {
   self->x = x;
   self->y = y;
-  self->print = &Point_print;
+  self->vPrint = &Point_vPrint;
 }
 
 typedef struct ColorPoint {
-  void (*print)(struct ColorPoint *);
+  void (*vPrint)(struct ColorPoint *);
   int x;
   int y;
   int color;
@@ -35,14 +39,18 @@ void ColorPoint_setColor(ColorPoint *self, int c) {
 }
 
 void ColorPoint_print(ColorPoint *self) {
-  printf("CP: %d, %d, %d\n", self->x, self->y, self->color);
+  printf("CP.print: %d, %d, %d\n", self->x, self->y, self->color);
+}
+
+void ColorPoint_vPrint(ColorPoint *self) {
+  printf("CP.print: %d, %d, %d\n", self->x, self->y, self->color);
 }
 
 void ColorPoint_init(ColorPoint *self, int x,
                      int y, int color) {
   Point_init((Point *)self, x, y); // Casting works like magic
   self->color = color;
-  self->print = &ColorPoint_print;
+  self->vPrint = &ColorPoint_vPrint;
 }
 
 int main() {
@@ -60,9 +68,11 @@ int main() {
     p = (Point *)temp;
   }
 
-  p->print(p);         // dynamic dispatch
+  Point_print(p);      // static dispatch
+  p->vPrint(p);        // dynamic dispatch
   Point_move(p, 5, 4); // static dispatch
-  p->print(p);         // dynamic dispatch
+  Point_print(p);      // static dispatch
+  p->vPrint(p);        // dynamic dispatch
   
   return 0;
 }
