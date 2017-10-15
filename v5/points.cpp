@@ -52,20 +52,22 @@ int main() {
   srand(time(NULL));
   int r = rand();
 
-  Point *p;
+  Point p(0, 0);
+  ColorPoint cp(6, 9, 255);
+  Point *pp;
 
   if (r % 2 == 0) {
-    p = new Point(0, 0);
+    pp = &p;
   } else {
-    p = new ColorPoint(6, 9, 255);
+    pp = &cp;
   }
+  pp->print();     // static dispatch
   // It's not possible to know statically
-  // which print function will be called here.
-  p->print();     // static dispatch
-  p->vPrint();    // dynamic dispatch
-  p->move(5, 4);  // static dispatch
-  p->print();     // static dispatch
-  p->vPrint();    // dynamic dispatch
+  // which print function will be called here:
+  pp->vPrint();    // dynamic dispatch
+  pp->move(5, 4);  // static dispatch
+  pp->print();     // static dispatch
+  pp->vPrint();    // dynamic dispatch
 
   return 0;
 }

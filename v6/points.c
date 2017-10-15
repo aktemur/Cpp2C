@@ -109,22 +109,23 @@ int main() {
   srand(time(NULL));
   int r = rand();
 
-  Point *p;
+  Point p;
+  Point_init(&p, 0, 0);
+  ColorPoint cp;
+  ColorPoint_init(&cp, 6, 9, 255);
+  Point *pp;
+  
   if (r % 2 == 0) {
-    Point *temp = (Point *)malloc(sizeof(Point));
-    Point_init(temp, 0, 0);
-    p = (Point *)temp;
+    pp = (Point *)&p;
   } else {
-    ColorPoint *temp = (ColorPoint *)malloc(sizeof(ColorPoint));
-    ColorPoint_init(temp, 6, 9, 255);
-    p = (Point *)temp;
+    pp = (Point *)&cp;
   }
 
-  p->vtable->print(p); // dynamic dispatch
-  Point_move(p, 5, 4); // static dispatch
-  p->vtable->print(p);         // dynamic dispatch
-  p->vtable->bar(p, 2);
-  p->vtable->print(p);
+  pp->vtable->print(pp); // dynamic dispatch
+  Point_move(pp, 5, 4);  // static dispatch
+  pp->vtable->print(pp); // dynamic dispatch
+  pp->vtable->bar(pp, 2);
+  pp->vtable->print(pp);
   
   return 0;
 }

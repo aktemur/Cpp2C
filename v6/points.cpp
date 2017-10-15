@@ -65,20 +65,20 @@ int main() {
   srand(time(NULL));
   int r = rand();
 
-  Point *p;
+  Point p(0, 0);
+  ColorPoint cp(6, 9, 255);
+  Point *pp;
 
   if (r % 2 == 0) {
-    p = new Point(0, 0);
+    pp = &p;
   } else {
-    p = new ColorPoint(6, 9, 255);
+    pp = &cp;
   }
-  // It's not possible to know statically
-  // which print function will be called here.
-  p->print();    // dynamic dispatch
-  p->move(5, 4); // static dispatch
-  p->print();    // dynamic dispatch
-  p->bar(2);
-  p->print();
+  pp->print();
+  pp->move(5, 4);
+  pp->print();
+  pp->bar(2);
+  pp->print();
   
   return 0;
 }
